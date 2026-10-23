@@ -1,9 +1,9 @@
 /* ============================================================
-   styles.css — The World Is Yours (TWY)
+   styles.css ï¿½ The World Is Yours (TWY)
    Paleta sobria: fondo blanco, grises neutros, verde oscuro
    ============================================================ */
 
-/* -- Variables de color ----------------------------------- */
+/* -- Variables de color (Tema Claro por defecto) ---------- */
 :root {
     --color-bg:       #ffffff;
     --color-header:   #ffffff;
@@ -16,6 +16,19 @@
     --color-price:    #1a4731;
 }
 
+/* -- Variables de color (Tema Oscuro) --------------------- */
+[data-bs-theme="dark"] {
+    --color-bg:       #0f1115;
+    --color-header:   #17191e;
+    --color-footer:   #131519;
+    --color-card:     #1b1e24;
+    --color-border:   #2b313d;
+    --color-text:     #f0f2f5;
+    --color-muted:    #9ba3af;
+    --color-primary:  #40916c;
+    --color-price:    #74c69d;
+}
+
 /* -- Reset base ------------------------------------------- */
 * {
     box-sizing: border-box;
@@ -26,12 +39,78 @@
 body {
     background-color: var(--color-bg);
     color: var(--color-text);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* -- Header / Navbar -------------------------------------- */
 header {
     background-color: var(--color-header);
     border-bottom: 1px solid var(--color-border) !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* -- Boton selector de tema (Dark / Light mode) ------------ */
+.theme-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background-color: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
+    user-select: none;
+    line-height: 1.5;
+}
+
+.theme-toggle-btn:hover {
+    background-color: rgba(45, 106, 79, 0.08);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+.theme-toggle-btn:active {
+    transform: translateY(0);
+}
+
+.theme-toggle-btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Iconos de sol y luna segun el tema */
+.theme-icon-sun {
+    display: none;
+}
+
+.theme-icon-moon {
+    display: inline-block;
+}
+
+[data-bs-theme="dark"] .theme-icon-sun {
+    display: inline-block;
+    color: #f1c40f;
+}
+
+[data-bs-theme="dark"] .theme-icon-moon {
+    display: none;
+}
+
+[data-bs-theme="dark"] .theme-toggle-btn {
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+[data-bs-theme="dark"] .theme-toggle-btn:hover {
+    background-color: rgba(82, 183, 136, 0.15);
+    border-color: var(--color-primary);
+    color: var(--color-price);
 }
 
 /* Texto del logo */
@@ -77,6 +156,7 @@ header .btn-success:hover {
     background-color: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Textos del carrusel */
@@ -102,6 +182,17 @@ header .btn-success:hover {
     color: #fff;
 }
 
+[data-bs-theme="dark"] .carousel-item .btn-outline-dark {
+    color: var(--color-price);
+    border-color: var(--color-price);
+}
+
+[data-bs-theme="dark"] .carousel-item .btn-outline-dark:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+}
+
 /* Borde de imagen del carrusel */
 .carousel-item .border-dark {
     border-color: var(--color-border) !important;
@@ -114,10 +205,19 @@ header .btn-success:hover {
     filter: invert(1) brightness(0.2);
 }
 
+[data-bs-theme="dark"] .carousel-control-prev-icon,
+[data-bs-theme="dark"] .carousel-control-next-icon {
+    filter: none;
+}
+
 /* Indicadores del carrusel */
 .carousel-indicators [data-bs-target] {
     background-color: var(--color-primary);
     opacity: 0.4;
+}
+
+[data-bs-theme="dark"] .carousel-indicators [data-bs-target] {
+    background-color: var(--color-price);
 }
 
 .carousel-indicators .active {
@@ -137,6 +237,17 @@ header .btn-success:hover {
     border: 1px solid var(--color-border);
     border-radius: 8px;
     overflow: hidden;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+[data-bs-theme="dark"] .product-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+    border-color: var(--color-primary);
 }
 
 /* Imagen del producto */
@@ -200,6 +311,12 @@ header .btn-success:hover {
     color: var(--color-muted);
 }
 
+[data-bs-theme="dark"] .product-badge-stat {
+    background: #232730;
+    border-color: var(--color-border);
+    color: var(--color-muted);
+}
+
 /* -- Boton candado (acceso oculto al admin) --------------- */
 .admin-stealth-link {
     color: var(--color-muted) !important;
@@ -221,6 +338,7 @@ header .btn-success:hover {
 .footer-outer {
     background-color: var(--color-footer);
     border-top: 1px solid var(--color-border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 footer .nav-link {
